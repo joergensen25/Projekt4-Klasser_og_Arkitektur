@@ -1,6 +1,7 @@
 package gui;
 
 import controller.Controller;
+import javafx.application.Application;
 import model.Forestilling;
 import model.Kunde;
 import model.Plads;
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 
 public class App {
     public static void main(String[] args) {
+        Application.launch(Gui.class);
         initStorage();
         testPrint();
     }

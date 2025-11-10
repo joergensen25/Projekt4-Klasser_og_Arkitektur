@@ -4,10 +4,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Forestilling {
-    private String navn;
-    private LocalDate startDato;
-    private LocalDate slutDato;
-    private ArrayList<Bestilling> bestillinger = new ArrayList<>();
+    private final String navn;
+    private final LocalDate startDato;
+    private final LocalDate slutDato;
+    private final ArrayList<Bestilling> bestillinger = new ArrayList<>();
 
     public Forestilling(String navn, LocalDate startDato, LocalDate slutDato) {
         this.navn = navn;
@@ -31,8 +31,8 @@ public class Forestilling {
         return new ArrayList<>(bestillinger);
     }
 
-    public Bestilling createBestilling(LocalDate dato, Kunde kunde) {
-        Bestilling bestilling = new Bestilling(dato, this, kunde);
+    public Bestilling createBestilling(LocalDate dato, Forestilling forestilling, Kunde kunde) {
+        Bestilling bestilling = new Bestilling(dato, forestilling, kunde);
         bestillinger.add(bestilling);
         return bestilling;
     }
@@ -46,10 +46,8 @@ public class Forestilling {
 
     @Override
     public String toString() {
-        return "Forestilling: " +
-                "navn: '" + navn + '\'' +
-                ", Spiller fra: " + startDato +
-                ", Indtil: " + slutDato +
-                ", bestillinger: " + bestillinger;
+        return "Forestilling: '" + navn +
+                "' (" + startDato + " - " + slutDato +
+                "). bestillinger: " + bestillinger;
     }
 }

@@ -7,14 +7,12 @@ public class Bestilling {
     private LocalDate dato;
     private Forestilling forestilling;
     private Kunde kunde;
-    private ArrayList<Plads> pladser = new ArrayList<>();
+    private final ArrayList<Plads> pladser = new ArrayList<>();
 
     public Bestilling(LocalDate dato, Forestilling forestilling, Kunde kunde) {
         this.dato = dato;
         this.forestilling = forestilling;
         this.kunde = kunde;
-
-
     }
 
     public LocalDate getDato() {
@@ -30,7 +28,7 @@ public class Bestilling {
     }
 
     public ArrayList<Plads> getPladser() {
-        return pladser;
+        return new ArrayList<>(pladser);
     }
 
     public void setForestilling(Forestilling forestilling) {

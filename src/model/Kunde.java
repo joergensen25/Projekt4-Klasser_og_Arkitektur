@@ -3,8 +3,8 @@ package model;
 import java.util.ArrayList;
 
 public class Kunde {
-    private String navn;
-    private String mobil;
+    private final String navn;
+    private final String mobil;
     private final ArrayList<Bestilling> bestillinger = new ArrayList<>();
 
     public Kunde(String navn, String mobil) {
@@ -28,15 +28,15 @@ public class Kunde {
     void addBestilling(Bestilling bestilling) {
         if (!bestillinger.contains(bestilling)) {
             bestillinger.add(bestilling);
+            bestilling.setKunde(this);
         }
     }
 
     @Override
     public String toString() {
-        return "Kunde: " +
-                "navn: '" + navn + '\'' +
-                ", mobil: '" + mobil + '\'' +
-                ", bestillinger=" + bestillinger;
+        return "Kunde: " + navn +
+                ", (tlf. " + mobil +
+                "), bestillinger: " + bestillinger;
     }
 }
 
