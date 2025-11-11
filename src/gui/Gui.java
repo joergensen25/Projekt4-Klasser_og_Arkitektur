@@ -4,10 +4,7 @@ import controller.Controller;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import model.Forestilling;
@@ -50,13 +47,16 @@ public class Gui extends Application {
         pane.add(lblNavn, 0, 3);
         pane.add(txfNavn, 1, 3);
 
-        Label lblStartDato = new Label("Start dato");
+        Label lblStartDato = new Label("Vælg startdato");
         pane.add(lblStartDato, 0, 4);
-        pane.add(txfStartDato, 1, 4);
+        final DatePicker datePicker = new DatePicker();
+        pane.add(datePicker, 1, 4);
 
-        Label lblSlutDato = new Label("Slut dato");
+        Label lblSlutDato = new Label("Vælg slutdato");
         pane.add(lblSlutDato, 0, 5);
-        pane.add(txfSlutDato, 1, 5);
+        DatePicker datePicker1 = new DatePicker();
+        pane.add(datePicker1, 1, 5);
+
 
 
         Label lblKunder = new Label("Kunder");
@@ -77,23 +77,60 @@ public class Gui extends Application {
         Button btnOpretKunde = new Button("Opret kunde");
         pane.add(btnOpretKunde, 3, 5);
 
+
         btnOpretForestilling.setOnAction(event -> this.forestillingAction());
         btnOpretKunde.setOnAction(event -> this.kundeAction());
+
+
     }
 
 
     private void forestillingAction() {
-        String navn = txfNavn.getText().trim();
-        LocalDate startDato = LocalDate.parse(txfStartDato.getText().trim());
-        LocalDate slutDato = LocalDate.parse(txfSlutDato.getText().trim());
+        try {
+            String navn = txfNavn.getText().trim();
+            String startDato = txfStartDato.getText().trim();
+            String slutDato = txfSlutDato.getText().trim();
 
-        Forestilling forestilling = Controller.createForestilling(navn, startDato, slutDato);
-        lvwForestillinger.getItems().add(forestilling);
+            if (navn.isEmpty() || startDato.isEmpty() || slutDato.isEmpty()) {
+                showAlert(Alert.AlertType.WARNING, "Manglende oplysninger",
+                        "Udfyld alle felter, før du fortsætter");
+            }
 
+            LocalDate start = LocalDate.parse(startDato);
+            LocalDate slut = LocalDate.parse(slutDato);
+
+            Forestilling forestilling = Controller.createForestilling(navn, start, slut);
+
+            lvwForestillinger.getItems().add(forestilling);
+
+            txfNavn.clear();
+            txfStartDato.clear();
+            txfSlutDato.clear();
+
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Fejl i datoformat",
+                    "Datoerne skal skrives som YYYY-MM-DD");
+
+        }
     }
 
 
     private void kundeAction() {
+        String kundeNavn = txfKundeNavn.getText().trim();
+        String mobil = txfKundeMobil.getText().trim();
+
+
+        Kunde kunde = Controller.createKunde(kundeNavn, mobil);
+        lvwKunder.getItems().add(kunde);
+    }
+
+    private void showAlert(Alert.AlertType type, String title, String message) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+
     }
 
 
