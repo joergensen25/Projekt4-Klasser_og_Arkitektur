@@ -1,5 +1,6 @@
 package storage;
 
+import model.Bestilling;
 import model.Forestilling;
 import model.Kunde;
 import model.Plads;
@@ -11,6 +12,7 @@ public class Storage {
     private static final ArrayList<Forestilling> forestillinger = new ArrayList<>();
     private static final ArrayList<Kunde> kunder = new ArrayList<>();
     private static final ArrayList<Plads> pladser = new ArrayList<>();
+    private static final ArrayList<Bestilling> bestillinger = new ArrayList<>();
 
     public static void addForestilling(Forestilling forestilling) {
         if (!forestillinger.contains(forestilling)) {
@@ -30,6 +32,10 @@ public class Storage {
         }
     }
 
+    public static void addBestilling (Bestilling bestilling) {
+        bestillinger.add(bestilling);
+    }
+
     public static ArrayList<Forestilling> getForestillinger() {
         return new ArrayList<>(forestillinger);
     }
@@ -40,5 +46,9 @@ public class Storage {
 
     public static ArrayList<Plads> getPladser() {
         return new ArrayList<>(pladser);
+    }
+
+    public static ArrayList<Bestilling> getBestillinger() {
+        return new ArrayList<>(bestillinger);
     }
 }

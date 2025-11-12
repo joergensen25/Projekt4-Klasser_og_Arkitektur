@@ -2,19 +2,17 @@ package gui;
 
 import controller.Controller;
 import javafx.application.Application;
-import model.Forestilling;
-import model.Kunde;
-import model.Plads;
-import model.PladsType;
+import model.*;
 import storage.Storage;
 
 import java.time.LocalDate;
 
 public class App {
     public static void main(String[] args) {
-        Application.launch(Gui.class);
         initStorage();
         testPrint();
+        Application.launch(Gui.class);
+
     }
 
     public static void testPrint() {
@@ -26,14 +24,19 @@ public class App {
         System.out.println();
         for (Forestilling forestilling : Storage.getForestillinger()) {
             System.out.println(forestilling);
+
         }
 
         System.out.println();
         for (Kunde kunde : Storage.getKunder()) {
             System.out.println(kunde);
         }
-    }
 
+        System.out.println();
+        for (Bestilling bestilling : Storage.getBestillinger()) {
+            System.out.println(bestilling);
+        }
+    }
 
     public static void initStorage() {
         Forestilling evita = Controller.createForestilling("Evita", LocalDate.of(2023, 8, 10),

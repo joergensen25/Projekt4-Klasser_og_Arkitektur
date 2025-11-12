@@ -36,7 +36,16 @@ public class Bestilling {
     }
 
     public void setKunde(Kunde kunde) {
-        this.kunde = kunde;
+        if (this.kunde != kunde) {
+            Kunde oldKunde = this.kunde;
+            if (oldKunde != null) {
+                oldKunde.removeBestilling(this);
+            }
+            this.kunde = kunde;
+            if (kunde != null) {
+                kunde.addBestilling(this);
+            }
+        }
     }
 
     public void setDato(LocalDate dato) {

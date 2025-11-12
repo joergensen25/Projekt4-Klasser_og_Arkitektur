@@ -32,11 +32,18 @@ public class Kunde {
         }
     }
 
+    void removeBestilling(Bestilling bestilling) {
+        if (bestillinger.contains(bestilling)) {
+            bestillinger.remove(bestilling);
+            bestilling.setKunde(null);
+        }
+    }
+
     @Override
     public String toString() {
         return "Kunde: " + navn +
                 ", (tlf. " + mobil +
-                "), bestillinger: " + bestillinger;
+                ")";
     }
 }
 

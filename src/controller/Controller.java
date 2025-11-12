@@ -1,12 +1,11 @@
 package controller;
 
-import model.Forestilling;
-import model.Kunde;
-import model.Plads;
-import model.PladsType;
+import model.*;
 import storage.Storage;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 
 public class Controller {
 
@@ -26,5 +25,27 @@ public class Controller {
         Plads plads = new Plads(række, nr, pris, pladsType);
         Storage.addPlads(plads);
         return plads;
+    }
+
+    public static Bestilling opretBestillingMedPladser(Forestilling forestilling, Kunde kunde, LocalDate dato,
+                                                       ArrayList<Plads> pladser) {
+
+        if (dato.isBefore(forestilling.getStartDato()) || dato.isAfter(forestilling.getSlutDato())) {
+            return null;
+        }
+
+        for (Plads plads : pladser) {
+            if (!forestilling.erPladsLedig(plads.getRække(), plads.getNr(), dato)) {
+                return null;
+            }
+        }
+
+        Bestilling bestilling = forestilling.createBestilling(dato, forestilling, kunde);
+        for (Plads plads : pladser) {
+            bestilling.addPlads(plads);
+        }
+
+
+        return bestilling;
     }
 }
